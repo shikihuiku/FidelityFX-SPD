@@ -545,28 +545,52 @@ void SPD_Renderer::OnRender(State *pState, SwapChain *pSwapChain)
     // Post proc---------------------------------------------------------------------------
     //
     {
-        switch (pState->downsampler)
-        {
-        case Downsampler::PS:
-            m_PSDownsampler.Draw(pCmdLst1);
-            m_PSDownsampler.Gui();
-            break;
-        case Downsampler::Multipass_CS:
-            m_CSDownsampler.Draw(pCmdLst1);
-            m_CSDownsampler.Gui();
-            break;
-        case Downsampler::SPD_CS:
-            m_SPD_Versions.Dispatch(pCmdLst1, pState->spdVersion, pState->spdPacked);
-            m_SPD_Versions.Gui(pState->spdVersion, pState->spdPacked);
-            break;
-        case Downsampler::SPD_CS_Linear_Sampler:
-            m_SPD_Versions.DispatchLinearSamplerVersion(pCmdLst1, pState->spdVersion, pState->spdPacked);
-            m_SPD_Versions.GuiLinearSamplerVersion(pState->spdVersion, pState->spdPacked);
-            break;
-        }
+		switch (pState->downsampler)
+		{
+		case Downsampler::PS:
+			m_PSDownsampler.Draw(pCmdLst1);
+			break;
+		case Downsampler::Multipass_CS:
+			m_CSDownsampler.Draw(pCmdLst1);
+			break;
+		case Downsampler::SPD_CS:
+			m_SPD_Versions.Dispatch(pCmdLst1, pState->spdVersion, pState->spdPacked);
+			break;
+		case Downsampler::SPD_CS_Linear_Sampler:
+			m_SPD_Versions.DispatchLinearSamplerVersion(pCmdLst1, pState->spdVersion, pState->spdPacked);
+			break;
+		case Downsampler::SPD_CS_WaveOpSinglePass:
+			m_SPD_Versions.DispatchWaveOpSinglePass(pCmdLst1, pState->spdVersion, pState->spdPacked);
+			break;
+		case Downsampler::SPD_CS_WaveOpMultiPass:
+			m_SPD_Versions.DispatchWaveOpMultiPass(pCmdLst1, pState->spdVersion, pState->spdPacked);
+			break;
+		}
 
         m_GPUTimer.GetTimeStamp(pCmdLst1, "Downsampler");
-    }
+
+		switch (pState->downsampler)
+		{
+		case Downsampler::PS:
+			m_PSDownsampler.Gui();
+			break;
+		case Downsampler::Multipass_CS:
+			m_CSDownsampler.Gui();
+			break;
+		case Downsampler::SPD_CS:
+			m_SPD_Versions.Gui(pState->spdVersion, pState->spdPacked);
+			break;
+		case Downsampler::SPD_CS_Linear_Sampler:
+			m_SPD_Versions.GuiLinearSamplerVersion(pState->spdVersion, pState->spdPacked);
+			break;
+		case Downsampler::SPD_CS_WaveOpSinglePass:
+			m_SPD_Versions.GuiWaveOpSinglePass(pState->spdVersion, pState->spdPacked);
+			break;
+		case Downsampler::SPD_CS_WaveOpMultiPass:
+			m_SPD_Versions.GuiWaveOpMultiPass(pState->spdVersion, pState->spdPacked);
+			break;
+		}
+	}
 
     ThrowIfFailed(pCmdLst1->Close());
     ID3D12CommandList* CmdListList1[] = { pCmdLst1 };

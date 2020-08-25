@@ -45,7 +45,13 @@ namespace CAULDRON_DX12
         m_spd_WaveOps_Packed_Linear_Sampler.OnCreate(pDevice, pResourceViewHeaps, pConstantBufferRing, outFormat, false, true);
         m_spd_No_WaveOps_NonPacked_Linear_Sampler.OnCreate(pDevice, pResourceViewHeaps, pConstantBufferRing, outFormat, true, false);
         m_spd_No_WaveOps_Packed_Linear_Sampler.OnCreate(pDevice, pResourceViewHeaps, pConstantBufferRing, outFormat, true, true);
-    }
+
+		m_spd_WaveOps_NonPacked_WaveOpSinglePass.OnCreate(pDevice, pResourceViewHeaps, pConstantBufferRing, outFormat, false, false);
+		m_spd_WaveOps_Packed_WaveOpSinglePass.OnCreate(pDevice, pResourceViewHeaps, pConstantBufferRing, outFormat, false, true);
+
+		m_spd_WaveOps_NonPacked_WaveOpMultiPass.OnCreate(pDevice, pResourceViewHeaps, pConstantBufferRing, outFormat, false, false);
+		m_spd_WaveOps_Packed_WaveOpMultiPass.OnCreate(pDevice, pResourceViewHeaps, pConstantBufferRing, outFormat, false, true);
+	}
 
     int SPD_Versions::GetMaxMipLevelCount(int Width, int Height)
     {
@@ -64,7 +70,13 @@ namespace CAULDRON_DX12
         m_spd_WaveOps_Packed_Linear_Sampler.OnCreateWindowSizeDependentResources(Width, Height, pInput, GetMaxMipLevelCount(Width, Height));
         m_spd_No_WaveOps_NonPacked_Linear_Sampler.OnCreateWindowSizeDependentResources(Width, Height, pInput, GetMaxMipLevelCount(Width, Height));
         m_spd_No_WaveOps_Packed_Linear_Sampler.OnCreateWindowSizeDependentResources(Width, Height, pInput, GetMaxMipLevelCount(Width, Height));
-    }
+
+		m_spd_WaveOps_NonPacked_WaveOpSinglePass.OnCreateWindowSizeDependentResources(Width, Height, pInput, GetMaxMipLevelCount(Width, Height));
+		m_spd_WaveOps_Packed_WaveOpSinglePass.OnCreateWindowSizeDependentResources(Width, Height, pInput, GetMaxMipLevelCount(Width, Height));
+
+		m_spd_WaveOps_NonPacked_WaveOpMultiPass.OnCreateWindowSizeDependentResources(Width, Height, pInput, GetMaxMipLevelCount(Width, Height));
+		m_spd_WaveOps_Packed_WaveOpMultiPass.OnCreateWindowSizeDependentResources(Width, Height, pInput, GetMaxMipLevelCount(Width, Height));
+	}
 
     void SPD_Versions::OnDestroyWindowSizeDependentResources()
     {
@@ -77,7 +89,13 @@ namespace CAULDRON_DX12
         m_spd_WaveOps_Packed_Linear_Sampler.OnDestroyWindowSizeDependentResources();
         m_spd_No_WaveOps_NonPacked_Linear_Sampler.OnDestroyWindowSizeDependentResources();
         m_spd_No_WaveOps_Packed_Linear_Sampler.OnDestroyWindowSizeDependentResources();
-    }
+
+		m_spd_WaveOps_NonPacked_WaveOpSinglePass.OnDestroyWindowSizeDependentResources();
+		m_spd_WaveOps_Packed_WaveOpSinglePass.OnDestroyWindowSizeDependentResources();
+
+		m_spd_WaveOps_NonPacked_WaveOpMultiPass.OnDestroyWindowSizeDependentResources();
+		m_spd_WaveOps_Packed_WaveOpMultiPass.OnDestroyWindowSizeDependentResources();
+	}
 
     void SPD_Versions::OnDestroy()
     {
@@ -90,7 +108,13 @@ namespace CAULDRON_DX12
         m_spd_WaveOps_Packed_Linear_Sampler.OnDestroy();
         m_spd_No_WaveOps_NonPacked_Linear_Sampler.OnDestroy();
         m_spd_No_WaveOps_Packed_Linear_Sampler.OnDestroy();
-    }
+
+		m_spd_WaveOps_NonPacked_WaveOpSinglePass.OnDestroy();
+		m_spd_WaveOps_Packed_WaveOpSinglePass.OnDestroy();
+
+		m_spd_WaveOps_NonPacked_WaveOpMultiPass.OnDestroy();
+		m_spd_WaveOps_Packed_WaveOpMultiPass.OnDestroy();
+	}
 
     void SPD_Versions::Dispatch(ID3D12GraphicsCommandList2* pCommandList, SPD_Version spdVersion, SPD_Packed spdPacked)
     {
@@ -148,6 +172,32 @@ namespace CAULDRON_DX12
         }
     }
 
+	void SPD_Versions::DispatchWaveOpSinglePass(ID3D12GraphicsCommandList2* pCommandList, SPD_Version spdVersion, SPD_Packed spdPacked)
+	{
+		switch (spdPacked)
+		{
+		case SPD_Packed::SPD_Non_Packed:
+			m_spd_WaveOps_NonPacked_WaveOpSinglePass.Draw(pCommandList);
+			break;
+		case SPD_Packed::SPD_Packed:
+			m_spd_WaveOps_Packed_WaveOpSinglePass.Draw(pCommandList);
+			break;
+		};
+	}
+
+	void SPD_Versions::DispatchWaveOpMultiPass(ID3D12GraphicsCommandList2* pCommandList, SPD_Version spdVersion, SPD_Packed spdPacked)
+	{
+		switch (spdPacked)
+		{
+		case SPD_Packed::SPD_Non_Packed:
+			m_spd_WaveOps_NonPacked_WaveOpMultiPass.Draw(pCommandList);
+			break;
+		case SPD_Packed::SPD_Packed:
+			m_spd_WaveOps_Packed_WaveOpMultiPass.Draw(pCommandList);
+			break;
+		};
+	}
+
     void SPD_Versions::Gui(SPD_Version spdVersion, SPD_Packed spdPacked)
     {
         switch (spdVersion)
@@ -203,4 +253,31 @@ namespace CAULDRON_DX12
             }
         }
     }
+
+	void SPD_Versions::GuiWaveOpSinglePass(SPD_Version spdVersion, SPD_Packed spdPacked)
+	{
+		switch (spdPacked)
+		{
+		case SPD_Packed::SPD_Non_Packed:
+			m_spd_WaveOps_NonPacked_WaveOpSinglePass.Gui();
+			break;
+		case SPD_Packed::SPD_Packed:
+			m_spd_WaveOps_Packed_WaveOpSinglePass.Gui();
+			break;
+		}
+	}
+
+	void SPD_Versions::GuiWaveOpMultiPass(SPD_Version spdVersion, SPD_Packed spdPacked)
+	{
+		switch (spdPacked)
+		{
+		case SPD_Packed::SPD_Non_Packed:
+			m_spd_WaveOps_NonPacked_WaveOpMultiPass.Gui();
+			break;
+		case SPD_Packed::SPD_Packed:
+			m_spd_WaveOps_Packed_WaveOpMultiPass.Gui();
+			break;
+		}
+	}
+
 }

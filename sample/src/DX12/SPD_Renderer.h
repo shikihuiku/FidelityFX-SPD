@@ -34,10 +34,12 @@ using namespace CAULDRON_DX12;
 
 enum class Downsampler
 {
-    PS,
-    Multipass_CS,
-    SPD_CS,
-    SPD_CS_Linear_Sampler,
+	PS,
+	Multipass_CS,
+	SPD_CS,
+	SPD_CS_Linear_Sampler,
+	SPD_CS_WaveOpSinglePass,
+	SPD_CS_WaveOpMultiPass,
 };
 
 class SPD_Renderer

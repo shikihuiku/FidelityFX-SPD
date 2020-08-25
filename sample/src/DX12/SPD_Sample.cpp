@@ -235,9 +235,11 @@ void SPD_Sample::OnRender()
             {
                 "PS",
                 "Multipass CS",
-                "SPD CS",
-                "SPD CS Linear Sampler",
-            };
+				"SPD CS",
+				"SPD CS Linear Sampler",
+				"SPD CS WaveOpSinglePass",
+				"SPD CS WaveOpMultiPass",
+			};
             ImGui::Combo("Downsampler Options", (int*)&m_state.downsampler, downsampleItemNames, _countof(downsampleItemNames));
 
             // Downsample settings
@@ -251,8 +253,8 @@ void SPD_Sample::OnRender()
             // NON-PACKED or PACKED Version
             const char* spdPackedNames[] =
             {
-                "Non-Packed",
-                "Packed",
+                "Non-Packed  (64 thread group in waveOp*.)",
+                "Packed (256 thread group in waveOp*.)",
             };
             ImGui::Combo("SPD Non-Packed / Packed Version", (int*)&m_state.spdPacked, spdPackedNames, _countof(spdPackedNames));
         }

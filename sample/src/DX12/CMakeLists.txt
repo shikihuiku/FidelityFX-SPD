@@ -7,8 +7,12 @@ set(sources
 	PSDownsampler.h
 	SPD_CS.cpp
 	SPD_CS.h
-        SPD_CS_Linear_Sampler.cpp
+    SPD_CS_Linear_Sampler.cpp
 	SPD_CS_Linear_Sampler.h
+	SPD_CS_WaveOpSinglePass.cpp
+	SPD_CS_WaveOpSinglePass.h
+	SPD_CS_WaveOpMultiPass.cpp
+	SPD_CS_WaveOpMultiPass.h
 	SPD_Versions.cpp
 	SPD_Versions.h
 	SPD_Sample.cpp
@@ -24,6 +28,8 @@ set(Shaders_src
     ${CMAKE_CURRENT_SOURCE_DIR}/PSDownsampler.hlsl
     ${CMAKE_CURRENT_SOURCE_DIR}/SPD_Integration.hlsl
     ${CMAKE_CURRENT_SOURCE_DIR}/SPD_Integration_Linear_Sampler.hlsl
+    ${CMAKE_CURRENT_SOURCE_DIR}/SPD_WaveOpSinglePass.hlsl
+    ${CMAKE_CURRENT_SOURCE_DIR}/SPD_WaveOpMultiPass.hlsl
 )
 
 source_group("Sources"            FILES ${sources})    

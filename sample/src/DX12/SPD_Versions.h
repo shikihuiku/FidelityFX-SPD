@@ -20,6 +20,8 @@
 #pragma once
 #include "SPD_CS.h"
 #include "SPD_CS_Linear_Sampler.h"
+#include "SPD_CS_WaveOpSinglePass.h"
+#include "SPD_CS_WaveOpMultiPass.h"
 
 namespace CAULDRON_DX12
 {
@@ -55,6 +57,12 @@ namespace CAULDRON_DX12
         void DispatchLinearSamplerVersion(ID3D12GraphicsCommandList2* pCommandList, SPD_Version dsVersion, SPD_Packed dsPacked);
         void GuiLinearSamplerVersion(SPD_Version dsVersion, SPD_Packed dsPacked);
 
+		void DispatchWaveOpSinglePass(ID3D12GraphicsCommandList2* pCommandList, SPD_Version dsVersion, SPD_Packed dsPacked);
+		void GuiWaveOpSinglePass(SPD_Version dsVersion, SPD_Packed dsPacked);
+
+		void DispatchWaveOpMultiPass(ID3D12GraphicsCommandList2* pCommandList, SPD_Version dsVersion, SPD_Packed dsPacked);
+		void GuiWaveOpMultiPass(SPD_Version dsVersion, SPD_Packed dsPacked);
+
     private:
         Device                  *m_pDevice;
 
@@ -69,6 +77,12 @@ namespace CAULDRON_DX12
 
         SPD_CS_Linear_Sampler m_spd_WaveOps_Packed_Linear_Sampler;
         SPD_CS_Linear_Sampler m_spd_No_WaveOps_Packed_Linear_Sampler;
+
+		SPD_CS_WaveOpSinglePass m_spd_WaveOps_NonPacked_WaveOpSinglePass;
+		SPD_CS_WaveOpSinglePass m_spd_WaveOps_Packed_WaveOpSinglePass;
+
+		SPD_CS_WaveOpMultiPass m_spd_WaveOps_NonPacked_WaveOpMultiPass;
+		SPD_CS_WaveOpMultiPass m_spd_WaveOps_Packed_WaveOpMultiPass;
 
         int GetMaxMipLevelCount(int Width, int Height);
     };
